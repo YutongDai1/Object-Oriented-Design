@@ -17,19 +17,23 @@ public class BankBranch {
     this.tellers = new ArrayList<>();
   }
 
+  public void addTeller(BankTeller teller) {
+    this.tellers.add(teller);
+  }
+
   private BankTeller getAvailableTeller() {
     Random random = new Random();
     int index = random.nextInt(this.tellers.size());
     return this.tellers.get(index);
   }
 
-  public void openAccount(String customerName) {
+  public int openAccount(String customerName) {
     if (this.tellers.size() == 0) {
       throw new Error("Branch does not have any tellers");
     }
 
     int availableTeller = getAvailableTeller().getId();
-    this.bankSystem.openAccount(customerName, availableTeller);
+    return this.bankSystem.openAccount(customerName, availableTeller);
   }
 
   public void deposit(int customerId, double money) {
@@ -54,7 +58,7 @@ public class BankBranch {
   }
 
 
-  public double collectCash(int ratio) {
+  public double collectCash(double ratio) {
     double cashCollected = ratio * cashOnHand;
     cashOnHand -= cashCollected;
     return cashCollected;

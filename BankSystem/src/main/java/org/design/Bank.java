@@ -18,11 +18,15 @@ public class Bank {
     return branch;
   }
 
-  public void collectCash(int ratio) {
+  public void collectCash(double ratio) {
     for (BankBranch bankBranch : bankBranches) {
       bankCash += bankBranch.collectCash(ratio);
     }
   }
+  public void printTransactions() {
+    for (Transaction transaction : this.bankSystem.getTransactions()) {
+      System.out.println(transaction.getTransactionDescription());
+    }
+  }
 
-  
 }

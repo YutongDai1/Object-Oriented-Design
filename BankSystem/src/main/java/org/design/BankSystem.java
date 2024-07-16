@@ -28,7 +28,7 @@ public class BankSystem {
     BankAccount bankAccount = new BankAccount(customerId, name, 0);
     bankAccounts.add(bankAccount);
 
-    Transaction transaction = new OpenAccount(customerId, tellerId);
+    Transaction transaction = new OpenAccount(tellerId, customerId);
     transactions.add(transaction);
     return customerId;
   }
@@ -39,14 +39,14 @@ public class BankSystem {
     }
 
 
-    Transaction transaction = new Withdraw(customerId, tellerId);
+    Transaction transaction = new Withdraw(tellerId, customerId, amount);
     transactions.add(transaction);
   }
   public void deposit(int customerId, int tellerId, double amount) {
     BankAccount bankAccount = this.bankAccounts.get(customerId);
     bankAccount.deposit(amount);
 
-    Transaction transaction = new Deposit(customerId, tellerId);
+    Transaction transaction = new Deposit(tellerId, customerId, amount);
     transactions.add(transaction);
   }
 

@@ -1,17 +1,14 @@
 package org.design;
 
 public class Transaction {
-  private int tellId;
+  private int tellerId;
   private int customerId;
 
   public Transaction(int tellId, int customerId) {
-    this.tellId = tellId;
+    this.tellerId = tellId;
     this.customerId = customerId;
   }
 
-  public int getTellId() {
-    return tellId;
-  }
 
   public int getCustomerId() {
     return customerId;
@@ -19,5 +16,9 @@ public class Transaction {
 
   public String getTransactionDescription() {
     return "";
+  }
+
+  public int getTellerId() {
+    return tellerId;
   }
 }
