@@ -33,7 +33,21 @@ public class MovieRecommendation {
     return bestMovie != null ? bestMovie.getTitle() : null;
   }
 
-  private String recommendMovieToExistingUser() {
-    return "";
+  private String recommendMovieToExistingUser(User user) {
+    Movie bestMovie = null;
+    int similarityScore = Integer.MAX_VALUE; // Lower is better
+
+    for (User reviewer : this.ratingRegister.getUsers()) {
+      if (reviewer.getId() == user.getId()) {
+        continue;
+      }
+      int score = this.getSimilarityScore(user, reviewer);
+      if (score < similarityScore) {
+        similarityScore = score;
+        Movie recommendedMovie = this.recommendUnwatchedMovie(user, reviewer);
+        bestMovie = recommendedMovie != null ? recommendedMovie : bestMovie;
+      }
+    }
+    return bestMovie != null ? bestMovie.getTitle() : null;
   }
 }
