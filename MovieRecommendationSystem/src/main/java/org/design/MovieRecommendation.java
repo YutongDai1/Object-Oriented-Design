@@ -12,10 +12,10 @@ public class MovieRecommendation {
   }
 
   public String recommendMovie(User user) {
-    if (this.ratingRegister.gerUserMovies(user).isEmpty()) {
+    if (this.ratingRegister.getUserMovies(user).isEmpty()) {
       return recommendMovieToUnknownUser();
     } else {
-      return recommendMovieToExistingUser();
+      return recommendMovieToExistingUser(user);
     }
   }
 
@@ -49,5 +49,34 @@ public class MovieRecommendation {
       }
     }
     return bestMovie != null ? bestMovie.getTitle() : null;
+  }
+
+  private int getSimilarityScore(User user1, User user2) {
+
+    int similarityScore = Integer.MAX_VALUE; // Lower is better
+    for (Movie movie : this.ratingRegister.getUserMovies(user2)) {
+      Map<Integer, MovieRating> ratings = this.ratingRegister.getMovieRatings(movie);
+      // If user1 also rated the movie, add the difference in ratings
+      if (ratings.containsKey(user1.getId())) {
+        similarityScore = (similarityScore == Integer.MAX_VALUE) ? 0 : similarityScore;
+        similarityScore += Math.abs(
+            ratings.get(user1.getId()).ordinal() - ratings.get(user2.getId()).ordinal());
+      }
+    }
+    return similarityScore;
+  }
+
+  private Movie recommendUnwatchedMovie(User user1, User user2) {
+    Movie bestMovie = null;
+    int bestRating = 0;
+    for (Movie movie : this.ratingRegister.getUserMovies(user2)) {
+      Map<Integer, MovieRating> ratingMap = this.ratingRegister.getMovieRatings(movie);
+      if (!ratingMap.containsKey(user1.getId()) && ratingMap.get(user2.getId()).ordinal() > bestRating) {
+        bestMovie = movie;
+        bestRating = ratingMap.get(user2.getId()).ordinal();
+      }
+    }
+
+    return bestMovie;
   }
 }

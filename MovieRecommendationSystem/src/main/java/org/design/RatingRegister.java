@@ -27,7 +27,7 @@ public class RatingRegister {
       userMovies.put(user.getId(), new ArrayList<>());
     }
 
-    if (!movieRatings.containsKey(movie)) {
+    if (!movieRatings.containsKey(movie.getId())) {
       movies.add(movie);
       movieRatings.put(movie.getId(), new HashMap<>());
     }
@@ -46,7 +46,7 @@ public class RatingRegister {
     return (double) sum / ratings.size();
   }
 
-  public List<Movie> gerUserMovies(User user) {
+  public List<Movie> getUserMovies(User user) {
     int userId = user.getId();
     if (!userMovies.containsKey(userId)) {
       return new ArrayList<>();
