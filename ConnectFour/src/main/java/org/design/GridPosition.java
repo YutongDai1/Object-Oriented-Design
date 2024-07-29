@@ -1,4 +1,5 @@
 package org.design;
 
-public enum GridPosition {
+enum GridPosition {
+  EMPTY, YELLOW, RED
 }
