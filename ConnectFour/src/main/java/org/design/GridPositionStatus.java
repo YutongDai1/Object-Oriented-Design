@@ -1,5 +1,5 @@
 package org.design;
 
-enum GridPosition {
+enum GridPositionStatus {
   EMPTY, YELLOW, RED
 }
